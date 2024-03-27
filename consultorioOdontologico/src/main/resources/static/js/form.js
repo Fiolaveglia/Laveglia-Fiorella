@@ -9,7 +9,7 @@ document.getElementById('formularioOdontologo').addEventListener('submit', funct
         apellido: formData.get('apellido')
     };
 
-    fetch('http://localhost:8080/odontologos/registar', {
+    fetch('http://localhost:8080/odontologos/registrar', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -29,4 +29,6 @@ document.getElementById('formularioOdontologo').addEventListener('submit', funct
     .catch(error => {
         console.error('Error:', error);
     });
+
+    formularioOdontologo.reset();
 });
