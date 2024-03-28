@@ -21,6 +21,9 @@ public class TurnoSalidaDto {
         this.fechaYHora = fechaYHora;
     }
 
+    public TurnoSalidaDto(Long id, String s, String s1, LocalDateTime fechaYHora) {
+    }
+
     public Long getId() {
         return id;
     }

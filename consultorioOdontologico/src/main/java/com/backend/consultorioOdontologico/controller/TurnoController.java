@@ -24,7 +24,6 @@ public class TurnoController {
         this.turnoService = turnoService;
     }
 
-    //POST
     @PostMapping("/registrar")
     public ResponseEntity<TurnoSalidaDto> registrarPaciente(@RequestBody @Valid TurnoEntradaDto turnoEntradaDto) throws BadRequestException, ResourceNotFoundException {
         return new ResponseEntity<>(turnoService.registrarTurno(turnoEntradaDto), HttpStatus.CREATED);

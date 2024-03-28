@@ -14,7 +14,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class TurnoService implements ITurnoService {
@@ -60,20 +63,40 @@ public class TurnoService implements ITurnoService {
             turnoSalidaDto = entidadADtoSalida(turnoNuevo, paciente, odontologo);
             LOGGER.info("Nuevo turno registrado con exito: {}", turnoSalidaDto);
         }
-
-
         return turnoSalidaDto;
     }
 
 
     @Override
     public List<TurnoSalidaDto> listarTurnos() {
-        return null;
+        List<Turno> turnos = turnoRepository.findAll();
+        List<TurnoSalidaDto> turnosDto = new ArrayList<>();
+        for (Turno turno : turnos) {
+            turnosDto.add(new TurnoSalidaDto(
+                    turno.getId(),
+                    turno.getOdontologo().getNombre() + " " + turno.getOdontologo().getApellido(),
+                    turno.getPaciente().getNombre() + " " + turno.getPaciente().getApellido(),
+                    turno.getFechaYHora()
+            ));
+        }
+        return turnosDto;
+
     }
 
     @Override
     public TurnoSalidaDto buscarTurnoPorId(Long id) {
-        return null;
+        Optional<Turno> optionalTurno = turnoRepository.findById(id);
+        if (optionalTurno.isPresent()) {
+            Turno turno = optionalTurno.get();
+            return new TurnoSalidaDto(
+                    turno.getId(),
+                    turno.getOdontologo().getNombre() + " " + turno.getOdontologo().getApellido(),
+                    turno.getPaciente().getNombre() + " " + turno.getPaciente().getApellido(),
+                    turno.getFechaYHora()
+            );
+        } else {
+            return null;
+        }
     }
 
     @Override
@@ -84,8 +107,6 @@ public class TurnoService implements ITurnoService {
         } else {
             throw new ResourceNotFoundException("No existe registro de paciente con id " + id);
         }
-
-
     }
 
     @Override
@@ -99,6 +120,4 @@ public class TurnoService implements ITurnoService {
         turnoSalidaDto.setOdontologoSalidaDto(odontologoSalidaDto);
         return turnoSalidaDto;
     }
-
-
 }

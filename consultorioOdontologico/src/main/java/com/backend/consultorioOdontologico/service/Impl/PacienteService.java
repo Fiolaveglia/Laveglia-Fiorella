@@ -34,15 +34,10 @@ public class PacienteService implements IPacienteService {
 
     @Override
     public PacienteSalidaDto registrarPaciente(PacienteEntradaDto paciente) {
-        //Logueamos lo que recibimos
         LOGGER.info("PacienteEntradaDto: {}", JsonPrinter.toString(paciente));
-        //convertimos mediante el mapper de dtoEntrada a entidad
         Paciente pacienteEntidad = modelMapper.map(paciente, Paciente.class);
-        //mandamos a persistir a la capa dao y obtenemos una entidad con ID
         Paciente pacienteEntidaConId = pacienteRepository.save(pacienteEntidad);
-        //transformamos la entidad obtenida en salidaDto
         PacienteSalidaDto pacienteSalidaDto = modelMapper.map(pacienteEntidaConId, PacienteSalidaDto.class);
-        //Logueamos lo que sale
         LOGGER.info("PacienteSalidaDto: {}", JsonPrinter.toString(pacienteSalidaDto));
         return pacienteSalidaDto;
     }
@@ -55,12 +50,6 @@ public class PacienteService implements IPacienteService {
                 .map(paciente -> modelMapper.map(paciente, PacienteSalidaDto.class))
                 .toList();
 
-        //List<Paciente> pacientes = pacienteIDao.listarTodos();
-        //List<PacienteSalidaDto> pacientesSalidaDto = new ArrayList<>();
-        //for (Paciente paciente : pacientes){
-        //    PacienteSalidaDto pacienteSalida = modelMapper.map(paciente, PacienteSalidaDto.class);
-        //    pacientesSalidaDto.add(pacienteSalida);
-        //}
 
         LOGGER.info("Listado de todos los pacientes: {}", JsonPrinter.toString(pacientesSalidaDto));
         return pacientesSalidaDto;

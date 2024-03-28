@@ -1,10 +1,7 @@
 package com.backend.consultorioOdontologico.service.Impl;
 
-import com.backend.consultorioOdontologico.dto.entrada.DomicilioEntradaDto;
 import com.backend.consultorioOdontologico.dto.entrada.OdontologoEntradaDto;
-import com.backend.consultorioOdontologico.dto.entrada.PacienteEntradaDto;
 import com.backend.consultorioOdontologico.dto.salida.OdontologoSalidaDto;
-import com.backend.consultorioOdontologico.dto.salida.PacienteSalidaDto;
 import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
@@ -13,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,9 +24,9 @@ class OdontologoServiceTest {
 
     @Test
     @Order(1)
-    void deberiaRegistrarseUnPacienteDeNombreAlejandro_yRetornarSuId() {
+    void deberiaRegistrarseUnOdontologoDeNombreAlejandro_yRetornarSuId() {
 
-        OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto("2547", "Alejandro", "Pereira");
+        OdontologoEntradaDto odontologoEntradaDto = new OdontologoEntradaDto("2547DFERD", "Alejandro", "Pereira");
         OdontologoSalidaDto odontologoSalidaDto = odontologoService.registrarOdontologo(odontologoEntradaDto);
 
         assertNotNull(odontologoSalidaDto);
@@ -41,7 +37,7 @@ class OdontologoServiceTest {
 
     @Test
     @Order(2)
-    void deberiaEliminarseElPacienteConId1() {
+    void deberiaEliminarseElOdontologoConId1() {
 
         assertDoesNotThrow(() -> odontologoService.eliminarOdontologo(1L));
     }
@@ -49,7 +45,7 @@ class OdontologoServiceTest {
 
     @Test
     @Order(3)
-    void deberiaDevolverUnaListaVaciaDePacientes() {
+    void deberiaDevolverUnaListaVaciaDeOdontologos() {
         List<OdontologoSalidaDto> odontologos = odontologoService.listarOdontologos();
 
         assertTrue(odontologos.isEmpty());
@@ -57,7 +53,7 @@ class OdontologoServiceTest {
 
     @Test
     @Order(4)
-    void deberiaRetornarNullCuandoSeBuscaUnPacientePorId() {
+    void deberiaRetornarNullCuandoSeBuscaUnOdontologoPorId() {
         OdontologoSalidaDto odontologoBuscado = odontologoService.buscarOdontologoPorId(1L);
 
         assertNull(odontologoBuscado);
